@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Tsymbal_Shipment>
+            <version>1.0.0</version>
+        </Tsymbal_Shipment>
+    </modules>
+    <global>
+        <models>
+            <shipment>
+                <class>Tsymbal_Shipment_Model</class>
+            </shipment>
+            <sales>
+                <rewrite>
+                    <order>Tsymbal_Shipment_Model_Sales_Order</order>
+                </rewrite>
+            </sales>
+        </models>
+        <helpers>
+            <shipment>
+                <class>Tsymbal_Shipment_Helper</class>
+            </shipment>
+        </helpers>
+        <blocks>
+            <shipment>
+                <class>Tsymbal_Shipment_Block</class>
+            </shipment>
+        </blocks>
+    </global>
+    <frontend>
+        <layout>
+            <updates>
+                <shipment_layout module="shipment">
+                    <file>shipment.xml</file>
+                </shipment_layout>
+            </updates>
+        </layout>
+    </frontend>
+    <default>
+        <carriers>
+            <shipment>
+                <active>1</active>
+                <sallowspecific>0</sallowspecific>
+                <model>shipment/carrier</model>
+                <name>standart</name>
+                <title>StorePickup</title>
+                <specificerrmsg>This shipping method is currently unavailable. If you would like to ship using this
+                    shipping method, please contact us.
+                </specificerrmsg>
+                <handling_type>F</handling_type>
+            </shipment>
+        </carriers>
+    </default>
+</config>

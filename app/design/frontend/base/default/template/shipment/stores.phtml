@@ -1,0 +1,6 @@
+<?php $stores = $this->getStores(); ?>
+<select name="shipping_pickup">
+    <?php foreach ($stores as $store) : ?>
+    <option><?=$store ?></option>
+    <?php endforeach; ?>
+</select>
