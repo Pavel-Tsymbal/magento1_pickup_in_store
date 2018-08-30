@@ -20,23 +20,24 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
                         </active>
-                        <name translate="label">
-                            <label>Method Name</label>
-                            <frontend_type>text</frontend_type>
-                            <sort_order>3</sort_order>
+                        <!--<name translate="label">-->
+                            <!--<label>Method Name</label>-->
+                            <!--<frontend_type>text</frontend_type>-->
+                            <!--<sort_order>3</sort_order>-->
+                            <!--<show_in_default>1</show_in_default>-->
+                            <!--<show_in_website>1</show_in_website>-->
+                            <!--<show_in_store>1</show_in_store>-->
+                        <!--</name>-->
+                        <add_store>
+                            <label>Stores list:</label>
+                            <frontend_model>shipment/adminhtml_store</frontend_model>
+                            <backend_model>adminhtml/system_config_backend_serialized</backend_model>
+                            <sort_order>4</sort_order>
                             <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
-                        </name>
-                        <select_stores>
-                            <label>Stores</label>
-                            <frontend_type>multiselect</frontend_type>
-                            <source_model>shipment/source_stores</source_model>
-                            <sort_order>3</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
-                        </select_stores>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </add_store>
                         <title translate="label">
                             <label>Title</label>
                             <frontend_type>text</frontend_type>

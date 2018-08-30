@@ -10,11 +10,6 @@
             <shipment>
                 <class>Tsymbal_Shipment_Model</class>
             </shipment>
-            <sales>
-                <rewrite>
-                    <order>Tsymbal_Shipment_Model_Sales_Order</order>
-                </rewrite>
-            </sales>
         </models>
         <helpers>
             <shipment>
@@ -42,7 +37,6 @@
                 <active>1</active>
                 <sallowspecific>0</sallowspecific>
                 <model>shipment/carrier</model>
-                <name>standart</name>
                 <title>StorePickup</title>
                 <specificerrmsg>This shipping method is currently unavailable. If you would like to ship using this
                     shipping method, please contact us.

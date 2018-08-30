@@ -4,39 +4,35 @@ class Tsymbal_Shipment_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstrac
 {
     protected $_code = 'shipment';
 
-    protected $_formBlockType = 'shipment/stores';
-    protected $_infoBlockType = 'shipment/info';
+    //get stores array for 'pickup dropdown'
+    public function getConfigData()
+    {
+        return unserialize(Mage::getStoreConfig('carriers/shipment/add_store'));
+    }
 
     public function collectRates(Mage_Shipping_Model_Rate_Request $request)
     {
         /** @var Mage_Shipping_Model_Rate_Result $result */
         $result = Mage::getModel('shipping/rate_result');
-        $rate = Mage::getModel('shipping/rate_result_method');
+        $methods = $this->getAllowedMethods();
+        unset($methods[0]);
 
-        $rate->setCarrier($this->_code);
-        $rate->setCarrierTitle($this->getConfigData('title'));
-        $rate->setMethod('pickup');
-        $rate->setMethodTitle($this->getConfigData('name'));
-        $result->append($rate);
+        foreach ($methods as $method) {
+
+            $rate = Mage::getModel('shipping/rate_result_method');
+            $rate->setCarrier($this->_code);
+            $rate->setCarrierTitle('pickup');
+            $rate->setMethod($method);
+            $rate->setMethodTitle($method);
+            $result->append($rate);
+        }
 
         return $result;
     }
 
     public function getAllowedMethods()
     {
-        return array(
-            'pickup' => $this->getConfigData('name')
-        );
-    }
-
-    /**
-     * Retrieve block type for method form generation
-     *
-     * @return string
-     */
-    public function getFormBlock()
-    {
-        return $this->_formBlockType;
+        return $this->getConfigData()['store'];
     }
 
 

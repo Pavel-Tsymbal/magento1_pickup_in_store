@@ -36,6 +36,9 @@
             <dt><?php echo $this->escapeHtml($this->getCarrierName($code)) ?></dt>
             <dd>
                 <ul>
+                    <?php if ($code === 'shipment'): ?>
+                    <p>Select store*:</p>
+
                     <?php $_sole = $_sole && count($_rates) == 1;
                     foreach ($_rates as $_rate): ?>
                         <?php $shippingCodePrice[] = "'" . $_rate->getCode() . "':" . (float)$_rate->getPrice(); ?>
@@ -66,15 +69,48 @@
                                     //]]>
                                 </script>
                             <?php endif; ?>
+
+                            <?php endif; ?>
+                                <label for="s_method_<?php echo $_rate->getCode() ?>"><?php echo $this->escapeHtml($_rate->getMethodTitle()) ?>
+                                </label>
+                            <?php endif ?>
+                        </li>
+                    <?php endforeach; ?>
+
+                    <?php else: ?>
+
+                    <?php $_sole = $_sole && count($_rates) == 1;
+                    foreach ($_rates as $_rate): ?>
+                        <?php $shippingCodePrice[] = "'" . $_rate->getCode() . "':" . (float)$_rate->getPrice(); ?>
+                        <li>
+                            <?php if ($_rate->getErrorMessage()): ?>
+                                <ul class="messages">
+                                    <li class="error-msg">
+                                        <ul>
+                                            <li><?php echo $this->escapeHtml($_rate->getErrorMessage()) ?></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            <?php else: ?>
+                            <?php if ($_sole) : ?>
+                                <span class="no-display"><input name="shipping_method" type="radio"
+                                                                value="<?php echo $_rate->getCode() ?>"
+                                                                id="s_method_<?php echo $_rate->getCode() ?>"
+                                                                checked="checked"/></span>
+                            <?php else: ?>
+                            <input name="shipping_method" type="radio" value="<?php echo $_rate->getCode() ?>"
+                                   id="s_method_<?php echo $_rate->getCode() ?>"<?php if ($_rate->getCode() === $this->getAddressShippingMethod()) echo ' checked="checked"' ?>
+                                   class="radio"/>
+
+                            <?php if ($_rate->getCode() === $this->getAddressShippingMethod()): ?>
+                                <script type="text/javascript">
+                                    //<![CDATA[
+                                    lastPrice = <?php echo (float)$_rate->getPrice(); ?>;
+                                    //]]>
+                                </script>
                             <?php endif; ?>
 
-                            <?php if ($_rate->getCode() === 'shipment_pickup') : ?>
-                                <label for="s_method_<?php echo $_rate->getCode() ?>"><?php echo $this->escapeHtml($_rate->getMethodTitle()) ?>
-                                    <br><br>
-                                    <p>Select store:*</p>
-                                    <?php echo $this->getlayout()->createBlock('shipment/stores')->setTemplate('shipment/stores.phtml')->toHtml(); ?>
-                                </label>
-                            <?php else : ?>
+                            <?php endif; ?>
                                 <label for="s_method_<?php echo $_rate->getCode() ?>"><?php echo $this->escapeHtml($_rate->getMethodTitle()) ?>
                                     <?php $_excl = $this->getShippingPrice($_rate->getPrice(), $this->helper('tax')->displayShippingPriceIncludingTax()); ?>
                                     <?php $_incl = $this->getShippingPrice($_rate->getPrice(), true); ?>
@@ -83,11 +119,11 @@
                                         (<?php echo $this->__('Incl. Tax'); ?><?php echo $_incl; ?>)
                                     <?php endif; ?>
                                 </label>
-                            <?php endif; ?>
-
                             <?php endif ?>
                         </li>
                     <?php endforeach; ?>
+
+                    <?php endif; ?>
                 </ul>
             </dd>
         <?php endforeach; ?>
