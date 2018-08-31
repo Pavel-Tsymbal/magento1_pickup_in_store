@@ -1,6 +1,13 @@
 <?xml version="1.0"?>
 
 <layout>
+    <checkout_onepage_index>
+        <reference name='head'>
+            <reference name="head">
+                <action method="addItem"><type>js</type><name>shipment/pickup.js</name></action>
+            </reference>
+        </reference>
+    </checkout_onepage_index>
     <checkout_onepage_shippingmethod>
         <reference name='root'>
             <action method='setTemplate'>

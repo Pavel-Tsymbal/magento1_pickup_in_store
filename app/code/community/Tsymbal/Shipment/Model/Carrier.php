@@ -15,18 +15,16 @@ class Tsymbal_Shipment_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstrac
         /** @var Mage_Shipping_Model_Rate_Result $result */
         $result = Mage::getModel('shipping/rate_result');
         $methods = $this->getAllowedMethods();
-        unset($methods[0]);
+        $methods[0] = $methodName = Mage::getStoreConfig('carriers/shipment/name');
 
         foreach ($methods as $method) {
-
             $rate = Mage::getModel('shipping/rate_result_method');
             $rate->setCarrier($this->_code);
-            $rate->setCarrierTitle('pickup');
+            $rate->setCarrierTitle('Pickup in store');
             $rate->setMethod($method);
             $rate->setMethodTitle($method);
             $result->append($rate);
         }
-
         return $result;
     }
 
@@ -34,6 +32,4 @@ class Tsymbal_Shipment_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstrac
     {
         return $this->getConfigData()['store'];
     }
-
-
 }
